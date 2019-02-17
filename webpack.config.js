@@ -52,4 +52,16 @@ Encore
     //.addEntry('admin', './assets/js/admin.js')
 ;
 
-module.exports = Encore.getWebpackConfig();
+var config = Encore.getWebpackConfig();
+var fs = require("fs");
+if(!Encore.isProduction()) {
+    fs.writeFile("fakewebpack.config.js", "module.exports = "+JSON.stringify(config), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("fakewebpack.config.js written");
+    });
+}
+
+
+module.exports = config;
